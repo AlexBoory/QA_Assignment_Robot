@@ -74,13 +74,13 @@ Setting empty values should fail
 *** Keywords ***
 Send a command to station
     [Arguments]    ${station_id}    ${command}    ${payload}=0
-    Create Session    versionCheck    ${base_url}    verify=True
+    Create Session    mySession    ${base_url}    verify=True
     ${body}=    Create Dictionary    command=${command}    payload=${payload}
-    ${response}=    POST On Session    versionCheck    /v1/tests/${station_id}    json=${body}
+    ${response}=    POST On Session    mySession    /v1/tests/${station_id}    json=${body}
     RETURN    ${response}
 
 Station ${station_id} version should be higher than 1.6
-   ${response}    Send a command to station    ${station_id}    getVersion
+    ${response}    Send a command to station    ${station_id}    getVersion
     Status Should Be    200    ${response}
     Should Be True    ${response.json()}[result] > 1.6
 
